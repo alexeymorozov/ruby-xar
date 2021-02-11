@@ -1,7 +1,9 @@
+require "rubygems"
+
 module Xar::Native
   extend FFI::Library
 
-  ffi_lib "libxar"
+  ffi_lib File.join(File.dirname(__FILE__), FFI.map_library_name("xar"))
 
   typedef :pointer, :xar_t
   typedef :pointer, :xar_file_t
@@ -29,6 +31,7 @@ module Xar::Native
   attach_function :xar_err_get_errno, [:xar_errctx_t], :int
 
   attach_function :xar_iter_new, [:void], :xar_iter_t
+  attach_function :xar_iter_new_fixed, :xar_iter_new, [], :xar_iter_t
   attach_function :xar_iter_free, [:xar_iter_t], :void
 
   attach_function :xar_file_first, [:xar_t, :xar_iter_t], :xar_file_t
