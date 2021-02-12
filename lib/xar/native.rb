@@ -1,7 +1,9 @@
+require 'ffi-compiler/loader'
+
 module Xar::Native
   extend FFI::Library
 
-  ffi_lib "libxar"
+  ffi_lib FFI::Compiler::Loader.find("libxar")
 
   typedef :pointer, :xar_t
   typedef :pointer, :xar_file_t
