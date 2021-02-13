@@ -1,3 +1,6 @@
+require "rubygems"
+require "rake/extensiontask"
+
 module Xar::Native
   extend FFI::Library
 
