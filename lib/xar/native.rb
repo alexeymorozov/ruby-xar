@@ -6,7 +6,7 @@ module Xar::Native
 
   # NOTE: ffi doesn't support bundles out of box https://github.com/ffi/ffi/issues/42#issuecomment-750031554
   # NOTE: rake-compiler doesn't support dylib generation https://github.com/rake-compiler/rake-compiler/issues/183
-  lib_name = Rake::ExtensionTask.new("stripttc", Gem::Specification::load("../extract_ttc.gemspec")).binary(RUBY_PLATFORM)
+  lib_name = Rake::ExtensionTask.new("xar", Gem::Specification::load("../xar.gemspec")).binary(RUBY_PLATFORM)
   puts "Lib: #{lib_name}"
   ffi_lib File.join(File.dirname(__FILE__), lib_name)
 
