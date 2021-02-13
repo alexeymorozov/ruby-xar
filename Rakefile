@@ -1,8 +1,9 @@
 require "bundler/gem_tasks"
-require "rake/testtask"
+require "rake/extensiontask"
 
-Rake::TestTask.new do |t|
-  t.pattern = "spec/**/*_spec.rb"
+spec = Gem::Specification.load("xar.gemspec")
+
+Gem::PackageTask.new(spec) do |pkg|
 end
 
-task default: :test
+Rake::ExtensionTask.new("xar", spec)
