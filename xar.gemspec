@@ -5,8 +5,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = "xar"
   spec.version       = "0.0.1"
-  spec.authors       = ["Adam Tanner"]
-  spec.email         = ["adam@adamtanner.org"]
+  spec.authors       = ["Adam Tanner", "Ribose Inc."]
+  spec.email         = ["adam@adamtanner.org", "open.source@ribose.com"]
   spec.summary       = %q{ Ruby FFI bindings to libxar. }
   spec.description   = %q{ Ruby FFI bindings to libxar. }
   spec.homepage      = "https://github.com/adamtanner/xar"
