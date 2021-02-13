@@ -12,7 +12,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/adamtanner/xar"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0") + ["lib/xar.bundle"]
+  spec.files = Dir.chdir(__dir__) do
+    `git ls-files -z`
+      .split("\x0").reject { |f| f.match(%r{^(.github|test|spec|features)/}) } +
+    Dir.glob("lib/xar.bundle")
+  end
+
   spec.executables   = spec.files.grep(%r{^bin/}) {|f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^spec/})
   spec.require_paths = ["lib"]
