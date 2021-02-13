@@ -8,7 +8,7 @@ module Xar::Native
   # NOTE: rake-compiler doesn't support dylib generation https://github.com/rake-compiler/rake-compiler/issues/183
   lib_name = Rake::ExtensionTask.new("xar", Gem::Specification::load("../xar.gemspec")).binary(RUBY_PLATFORM)
   puts "Lib: #{lib_name}"
-  ffi_lib File.join(File.dirname(__FILE__), lib_name)
+  ffi_lib File.join(File.dirname(__FILE__), "..", lib_name)
 
   typedef :pointer, :xar_t
   typedef :pointer, :xar_file_t
