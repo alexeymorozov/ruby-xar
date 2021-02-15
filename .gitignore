@@ -7,6 +7,8 @@
 /pkg/
 /spec/reports/
 /tmp/
-*.o
-*.a
-mkmf.log
+/ports/
+/*.installed
+lib/xar/*.dylib
+lib/xar/*.so
+lib/xar/*.dll

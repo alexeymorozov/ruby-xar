@@ -24,7 +24,9 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "ffi", "~> 1.14"
   spec.add_runtime_dependency "ffi-stat", "~> 0.3"
-  spec.add_runtime_dependency "rake-compiler", "~> 1.1"
-  spec.add_runtime_dependency "rake", "~> 10"
-  spec.add_development_dependency "bundler", "~> 2.2"
+
+  spec.add_development_dependency "rake", "~> 10"
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "mini_portile2"
+  spec.add_development_dependency "rake-compiler-dock", "~> 1.1"
 end
