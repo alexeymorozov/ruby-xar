@@ -4,6 +4,7 @@ require "mini_portile2"
 require "rake/clean"
 
 class XarRecipe < MiniPortile
+
   public :port_path
 
   def initialize    
@@ -15,6 +16,18 @@ class XarRecipe < MiniPortile
     }
 
     self.patch_files = Dir[File.join(__dir__, "..", "patches", "*.patch")].sort
+    @sysroot = "/"
+  end
+
+  def configure_defaults
+    [
+      "--host=#{@host}",
+#      "--sysroot=#{@sysroot}"
+    ]
+  end
+
+  def configure_prefix
+    "--prefix=#{File.expand_path(File.join(__dir__, "..", port_path))}"
   end
 
   def work_path
@@ -23,23 +36,32 @@ class XarRecipe < MiniPortile
 
   def configure
     Dir.chdir(work_path) do
-      system("./autogen.sh --prefix=#{File.join(__dir__, "..", port_path)}")
+      system("./autogen.sh #{computed_options.join(" ")}")
     end
   end
 end
 
-recipe = XarRecipe.new
-checkpoint = File.join(__dir__, "..", ".#{recipe.name}-#{RUBY_PLATFORM}-#{recipe.version}.installed")
+task :libxar, [:host, :sysroot] do |task, args|
+  XarRecipe.new.tap do |recipe|
+    recipe.host = args[:host] if args[:host]
+    recipe.sysroot = args[:sysroot] if args[:sysroot]
 
-CLEAN.include("ports", "tmp", checkpoint)
+    checkpoint = File.join(__dir__, "..", "ports", ".#{recipe.name}-#{recipe.host}-#{recipe.version}.installed")
 
-task :libxar do
-  unless File.exist?(checkpoint)
-    recipe.cook
-    touch checkpoint
+    unless File.exist?(checkpoint)
+      recipe.cook
+      touch checkpoint
+    end
+
+    recipe.activate
+
+    FileUtils.cp_r(
+      Dir.glob(File.join(__dir__, "..", recipe.port_path, "lib", "*")).grep(/\/(?:lib)?[a-zA-Z]+\.(?:so|dylib|dll)$/),
+      "lib/xar/",
+      verbose: true
+    )
   end
-
-  recipe.activate
-
-  FileUtils.cp(File.join(__dir__, "..", recipe.port_path, "lib", "libxar.dylib"), "lib/xar/")
 end
+
+CLEAN.include("ports", "tmp")
+''

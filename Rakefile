@@ -4,4 +4,4 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 task default: :spec
 
-task :compile => [:libxar]
+task :compile, [:host, :sysroot] => [:libxar]

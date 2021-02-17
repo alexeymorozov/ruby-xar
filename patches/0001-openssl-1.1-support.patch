@@ -1,0 +1,87 @@
+diff --git a/configure.ac b/configure.ac
+index 812b5ff..41e5d2a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -327,11 +327,17 @@ fi
+ dnl 
+ dnl Configure libcrypto (part of OpenSSL).
+ dnl 
+-have_libcrypto="1"
+-AC_CHECK_HEADERS([openssl/evp.h], , [have_libcrypto="0"])
+-AC_CHECK_LIB([crypto], [OpenSSL_add_all_ciphers], , [have_libcrypto="0"])
+-if test "x${have_libcrypto}" = "x0" ; then
+-  AC_MSG_ERROR([Cannot build without libcrypto (OpenSSL)])
++have_openssl_evp="1"
++AC_CHECK_HEADERS([openssl/evp.h], , [have_openssl_evp="0"])
++if test "x${have_openssl_evp}" = "x0" ; then
++  AC_MSG_ERROR([Cannot find openssl/evp.h (OpenSSL)])
++fi
++have_openssl_init_crypto="1"
++have_openssl_add_all_digests="1"
++AC_CHECK_LIB([crypto], [OPENSSL_init_crypto], , [have_openssl_init_crypto="0"])
++AC_CHECK_LIB([crypto], [OpenSSL_add_all_digests], , [have_openssl_add_all_digests="0"])
++if test "x${have_openssl_init_crypto}" = "x0" && test "x${have_openssl_add_all_digests}" = "x0" ; then
++  AC_MSG_ERROR([Cannot find OPENSSL_init_crypto or OpenSSL_add_all_digests (OpenSSL)])
+ fi
+ 
+ dnl 
+diff --git a/lib/archive.c b/lib/archive.c
+index adbe79b..017e753 100644
+--- a/lib/archive.c
++++ b/lib/archive.c
+@@ -222,7 +222,11 @@ xar_t xar_open(const char *file, int32_t flags) {
+ 		XAR(ret)->fd = XAR(ret)->heap_fd = -2;
+ 		return ret;
+ 	}
++	#if OPENSSL_VERSION_NUMBER <= 0x10200000L
+ 	OpenSSL_add_all_digests();
++	#else
++	OPENSSL_init_crypto();
++	#endif
+ 	if( flags ) {
+ 		char *tmp1, *tmp2, *tmp3, *tmp4;
+ 		tmp1 = tmp2 = strdup(file);
+diff --git a/lib/hash.c b/lib/hash.c
+index 5ca651b..2e3aaf1 100644
+--- a/lib/hash.c
++++ b/lib/hash.c
+@@ -113,7 +113,11 @@ int32_t xar_hash_unarchived_out(xar_t x, xar_file_t f, xar_prop_t p, void *in, s
+ 	
+ 	if(!CONTEXT(context)){
+ 		*context = context_create();
++		#if OPENSSL_VERSION_NUMBER <= 0x10200000L
+ 		OpenSSL_add_all_digests();
++		#else
++		OPENSSL_init_crypto();
++		#endif
+ 	}
+ 	
+ 	if( !CONTEXT(context)->unarchived ){
+@@ -154,7 +158,11 @@ int32_t xar_hash_archived_in(xar_t x, xar_file_t f, xar_prop_t p, void *in, size
+ 		
+ 	if(!CONTEXT(context)){
+ 		*context = context_create();
++		#if OPENSSL_VERSION_NUMBER <= 0x10200000L
+ 		OpenSSL_add_all_digests();
++		#else
++		OPENSSL_init_crypto();
++		#endif
+ 	}
+ 	
+ 	if ( !CONTEXT(context)->archived ){
+diff --git a/test/validate.c b/test/validate.c
+index 7168888..9f6e1a5 100644
+--- a/test/validate.c
++++ b/test/validate.c
+@@ -46,7 +46,11 @@ void heap_check(int fd, const char *name, const char *prop, off_t offset, off_t
+ 		exit(1);
+ 	}
+ 	fprintf(stderr, "Heap checking %s %s at offset: %" PRIu64 "\n", name, prop, HeapOff+offset);
++	#if OPENSSL_VERSION_NUMBER <= 0x10200000L
+ 	OpenSSL_add_all_digests();
++	#else
++	OPENSSL_init_crypto();
++	#endif
+ 	md = EVP_get_digestbyname("md5");
+ 	if( md == NULL ) {
+ 		fprintf(stderr, "No md5 digest in openssl\n");
