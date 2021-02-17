@@ -3,7 +3,7 @@ require "rubygems"
 module Xar::Native
   extend FFI::Library
 
-  ffi_lib "xar"
+  ffi_lib File.join(File.dirname(__FILE__), FFI.map_library_name("xar"))
 
   typedef :pointer, :xar_t
   typedef :pointer, :xar_file_t
