@@ -35,11 +35,17 @@ class XarRecipe < MiniPortile
   end
 
   def configure
+    autogen
+
+    super
+  end
+
+  def autogen
     if RUBY_PLATFORM=~/mingw|mswin/
       # Windows doesn't recognize the shebang.
-      execute('configure', %w(sh ./autogen.sh) + computed_options)
+      execute('autogen', %w(sh ./autogen.sh --noconfigure))
     else
-      execute('configure', %w(./autogen.sh) + computed_options)
+      execute('autogen', %w(./autogen.sh --noconfigure))
     end
   end
 end
