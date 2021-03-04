@@ -35,13 +35,11 @@ class XarRecipe < MiniPortile
   end
 
   def configure
-    Dir.chdir(work_path) do
-      log_out = log_file("configure")
-      command = %w(sh ./autogen.sh) + computed_options
-      puts "Pwd: #{Dir.pwd}"
-      s = "#{command.map(&:shellescape).join(" ")} > #{log_out.shellescape} 2>&1"
-      puts "System call: #{s}"
-      system(s)
+    if RUBY_PLATFORM=~/mingw|mswin/
+      # Windows doesn't recognize the shebang.
+      execute('configure', %w(sh ./autogen.sh) + computed_options)
+    else
+      execute('configure', %w(./autogen.sh) + computed_options)
     end
   end
 end
