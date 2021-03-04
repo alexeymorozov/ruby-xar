@@ -6,3 +6,6 @@ gem 'rake-compiler', github: 'larskanis/rake-compiler', branch: 'fix-native-vers
 
 # Specify your gem's dependencies in xarb.gemspec
 gemspec
+
+gem "mini_portile2", github: "alexeymorozov/mini_portile"
+# gem "mini_portile2", path: "../mini_portile"
