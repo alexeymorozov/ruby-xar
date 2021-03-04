@@ -36,7 +36,12 @@ class XarRecipe < MiniPortile
 
   def configure
     Dir.chdir(work_path) do
-      system("./autogen.sh #{computed_options.join(" ")}")
+      log_out = log_file("configure")
+      command = %w(sh ./autogen.sh) + computed_options
+      puts "Pwd: #{Dir.pwd}"
+      s = "#{command.map(&:shellescape).join(" ")} > #{log_out.shellescape} 2>&1"
+      puts "System call: #{s}"
+      system(s)
     end
   end
 end
