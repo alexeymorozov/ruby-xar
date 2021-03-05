@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 97ad781..febdd55 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -322,7 +322,7 @@ dnl Configure libz.
+ dnl 
+ have_libz="1"
+ AC_CHECK_HEADERS([zlib.h], , [have_libz="0"])
+-AC_CHECK_LIB([z], [deflate], , [have_libz="0"])
++# AC_CHECK_LIB([z], [deflate], , [have_libz="0"])
+ if test "x${have_libz}" = "x0" ; then
+   AC_MSG_ERROR([Cannot build without libz])
+ fi
