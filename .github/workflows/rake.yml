@@ -46,6 +46,10 @@ jobs:
           bundle exec rake compile
           ls -l lib/xar/
 
+      - if: matrix.os == 'windows-latest'
+        run: |
+          xml2-config --version
+
       - if: matrix.os != 'macos-latest'
         run: |
           bundle exec rake compile
