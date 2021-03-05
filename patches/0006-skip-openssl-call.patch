@@ -1,0 +1,17 @@
+diff --git a/configure.ac b/configure.ac
+index 1d99be7..97ad781 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -313,9 +313,9 @@ have_openssl_crypto_free="1"
+ AC_CHECK_LIB([crypto], [OPENSSL_init_crypto], , [have_openssl_init_crypto="0"])
+ AC_CHECK_LIB([crypto], [OpenSSL_add_all_digests], , [have_openssl_add_all_digests="0"])
+ AC_CHECK_LIB([crypto], [CRYPTO_free], , [have_openssl_crypto_free="0"])
+-if test "x${have_openssl_init_crypto}" = "x0" && test "x${have_openssl_add_all_digests}" = "x0" && test "x${have_openssl_crypto_free}" = "x0"; then
+-  AC_MSG_ERROR([Cannot find OPENSSL_init_crypto or OpenSSL_add_all_digests (OpenSSL)])
+-fi
++# if test "x${have_openssl_init_crypto}" = "x0" && test "x${have_openssl_add_all_digests}" = "x0" && test "x${have_openssl_crypto_free}" = "x0"; then
++  # AC_MSG_ERROR([Cannot find OPENSSL_init_crypto or OpenSSL_add_all_digests (OpenSSL)])
++# fi
+ 
+ dnl 
+ dnl Configure libz.
