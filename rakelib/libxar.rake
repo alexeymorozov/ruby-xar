@@ -7,9 +7,9 @@ class XarRecipe < MiniPortile
 
   public :port_path
 
-  def initialize    
+  def initialize
     super("libxar", "1.6.1")
-    
+
     self.files << {
       url: "https://github.com/mackyle/xar/archive/xar-1.6.1.tar.gz",
       sha256: "5e7d50dab73f5cb1713b49fa67c455c2a0dd2b0a7770cbc81b675e21f6210e25"
@@ -22,7 +22,6 @@ class XarRecipe < MiniPortile
   def configure_defaults
     [
       "--host=#{@host}",
-      "--build=x86_64-pc-mingw64",
 #      "--sysroot=#{@sysroot}"
     ]
   end
