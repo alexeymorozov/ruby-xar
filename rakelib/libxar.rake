@@ -22,6 +22,7 @@ class XarRecipe < MiniPortile
   def configure_defaults
     [
       "--host=#{@host}",
+      "--with-xml2-config",
 #      "--sysroot=#{@sysroot}"
     ]
   end
