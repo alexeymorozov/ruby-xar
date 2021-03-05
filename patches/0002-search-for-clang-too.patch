@@ -17,7 +17,7 @@ index 812b5ff..e7b6205 100644
  fi
 -AC_PROG_CPP
 +AC_PROG_CPP([g++ clang++])
-
+ 
  AC_PROG_INSTALL
  AC_PATH_PROG([LD], [ld], , [$PATH])
 
