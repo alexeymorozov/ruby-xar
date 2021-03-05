@@ -1,0 +1,17 @@
+diff --git a/lib/archive.c b/lib/archive.c
+index c2b23ea..9270d89 100644
+--- a/lib/archive.c
++++ b/lib/archive.c
+@@ -48,7 +48,11 @@
+ #include <errno.h>
+ #include <limits.h>
+ #include <sys/stat.h>
+-#include <arpa/inet.h> /* for ntoh{l,s} */
++#ifdef WIN32
++# include <Winsock2.h>
++#else
++# include <arpa/inet.h> /* for ntoh{l,s} */
++#endif
+ #include <inttypes.h>  /* for PRIu64 */
+ #include <libxml/xmlwriter.h>
+ #include <libxml/xmlreader.h>
