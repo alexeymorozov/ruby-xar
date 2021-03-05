@@ -1,0 +1,19 @@
+diff --git a/configure.ac b/configure.ac
+index 5455bbb..2e99004 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -291,10 +291,10 @@ else
+   AC_MSG_RESULT([no])
+   have_libxml2="0"
+ fi
+-if test "x${have_libxml2}" = "x1" ; then
+-  dnl Final sanity check, to make sure that xmlwriter is present.
+-  AC_CHECK_HEADER([libxml/xmlwriter.h], , [have_libxml2="0"])
+-fi
++# if test "x${have_libxml2}" = "x1" ; then
++  # dnl Final sanity check, to make sure that xmlwriter is present.
++  # AC_CHECK_HEADER([libxml/xmlwriter.h], , [have_libxml2="0"])
++# fi
+ if test "x${have_libxml2}" = "x0" ; then
+   AC_MSG_ERROR([Cannot build without libxml2])
+ fi

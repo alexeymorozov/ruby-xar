@@ -1,0 +1,23 @@
+diff --git a/configure.ac b/configure.ac
+index 812b5ff..e7b6205 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -73,7 +73,7 @@ cfghdrs="${cfghdrs} ${objroot}include/config.h"
+ dnl If CFLAGS isn't defined and using gcc, set CFLAGS to something reasonable.
+ dnl Otherwise, just prevent autoconf from molesting CFLAGS.
+ CFLAGS=$CFLAGS
+-AC_PROG_CC
++AC_PROG_CC([gcc clang])
+ AC_SYS_LARGEFILE
+ if test "x$CFLAGS" = "x" ; then
+   no_CFLAGS="yes"
+@@ -85,7 +85,7 @@ dnl Append EXTRA_CFLAGS to CFLAGS, if defined.
+ if test "x$EXTRA_CFLAGS" != "x" ; then
+   CFLAGS="$CFLAGS $EXTRA_CFLAGS"
+ fi
+-AC_PROG_CPP
++AC_PROG_CPP([g++ clang++])
+ 
+ AC_PROG_INSTALL
+ AC_PATH_PROG([LD], [ld], , [$PATH])
+
