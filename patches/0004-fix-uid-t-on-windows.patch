@@ -1,0 +1,45 @@
+diff --git a/configure.ac b/configure.ac
+index 0ff1bef..5455bbb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -208,40 +208,15 @@ AC_CHECK_MEMBERS([struct statfs.f_fstypename],,,[#include <sys/types.h>
+ AC_CHECK_MEMBERS([struct statvfs.f_fstypename],,,[#include <sys/statvfs.h>])
+ AC_CHECK_MEMBERS([struct stat.st_flags])
+ 
+-AC_CHECK_SIZEOF(uid_t)
+-if test $ac_cv_sizeof_uid_t = "4"; then
+-AC_DEFINE(UID_STRING, RId32)
+-AC_DEFINE(UID_CAST, (uint32_t))
+-elif test $ac_cv_sizeof_uid_t = "8"; then
+ AC_DEFINE(UID_STRING, PRId64)
+ AC_DEFINE(UID_CAST, (uint64_t))
+-else
+-AC_ERROR(can not detect the size of your system's uid_t type)
+-fi
+ 
+-AC_CHECK_SIZEOF(gid_t)
+-if test $ac_cv_sizeof_gid_t = "4"; then
+-AC_DEFINE(GID_STRING, PRId32)
+-AC_DEFINE(GID_CAST, (uint32_t))
+-elif test $ac_cv_sizeof_gid_t = "8"; then
+ AC_DEFINE(GID_STRING, PRId64)
+ AC_DEFINE(GID_CAST, (uint64_t))
+-else
+-AC_ERROR(can not detect the size of your system's gid_t type)
+-fi
+ 
+-AC_CHECK_SIZEOF(ino_t)
+-if test $ac_cv_sizeof_ino_t = "4"; then
+-AC_DEFINE(INO_STRING, PRId32)
+-AC_DEFINE(INO_HEXSTRING, PRIx32)
+-AC_DEFINE(INO_CAST, (uint32_t))
+-elif test $ac_cv_sizeof_ino_t = "8"; then
+ AC_DEFINE(INO_STRING, PRId64)
+ AC_DEFINE(INO_HEXSTRING, PRIx64)
+ AC_DEFINE(INO_CAST, (uint64_t))
+-else
+-AC_ERROR(can not detect the size of your system's ino_t type)
+-fi
+ 
+ AC_CHECK_SIZEOF(dev_t)
+ if test $ac_cv_sizeof_dev_t = "4"; then
