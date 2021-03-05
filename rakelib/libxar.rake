@@ -22,6 +22,7 @@ class XarRecipe < MiniPortile
   def configure_defaults
     [
       "--host=#{@host}",
+      "--build=x86_64-pc-mingw64",
 #      "--sysroot=#{@sysroot}"
     ]
   end
